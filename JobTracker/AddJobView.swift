@@ -38,3 +38,4 @@ struct AddJobView: View {
         }
     }
 }
+

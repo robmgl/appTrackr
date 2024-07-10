@@ -14,19 +14,26 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.jobs) { job in
-                    VStack(alignment: .leading) {
-                        Text(job.title)
-                            .font(.headline)
-                        Text("Company: \(job.company)")
-                        Text("Status: \(job.status.rawValue)")
+            VStack {
+                // Search Bar
+                TextField("Search by job title", text: $viewModel.searchText)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                List {
+                    ForEach(viewModel.filteredJobs) { job in
+                        VStack(alignment: .leading) {
+                            Text(job.title)
+                                .font(.headline)
+                            Text("Company: \(job.company)")
+                            Text("Status: \(job.status.rawValue)")
+                        }
+                        .onTapGesture {
+                            selectedJob = job
+                        }
                     }
-                    .onTapGesture {
-                        selectedJob = job
-                    }
+                    .onDelete(perform: viewModel.deleteJob) // Ensure this is here
                 }
-                .onDelete(perform: viewModel.deleteJob)
             }
             .navigationTitle("Job Tracker")
             .toolbar {
@@ -47,6 +54,7 @@ struct ContentView: View {
         }
     }
 }
+
 
 
 #Preview {

@@ -7,18 +7,19 @@
 
 import Foundation
 
-enum JobStatus: String, CaseIterable, Identifiable {
+enum JobStatus: String, CaseIterable, Identifiable, Codable {
     case applied = "Applied"
     case interview = "Interview"
-    case offered = "Offered"
+    case offer = "Offer"
     case rejected = "Rejected"
     
-    var id: String { self.rawValue }
+    var id: String { rawValue }
 }
 
-struct Job: Identifiable {
-    let id = UUID()
+struct Job: Identifiable, Codable {
+    let id: UUID
     var title: String
     var company: String
     var status: JobStatus
 }
+
