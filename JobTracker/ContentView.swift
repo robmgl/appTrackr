@@ -10,12 +10,10 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var viewModel = JobListViewModel()
     @State private var showingAddJobView = false
-    
+    @State private var selectedJob: Job? = nil
     
     var body: some View {
-        
         NavigationView {
-            
             List {
                 ForEach(viewModel.jobs) { job in
                     VStack(alignment: .leading) {
@@ -23,6 +21,9 @@ struct ContentView: View {
                             .font(.headline)
                         Text("Company: \(job.company)")
                         Text("Status: \(job.status.rawValue)")
+                    }
+                    .onTapGesture {
+                        selectedJob = job
                     }
                 }
                 .onDelete(perform: viewModel.deleteJob)
@@ -40,12 +41,13 @@ struct ContentView: View {
             .sheet(isPresented: $showingAddJobView) {
                 AddJobView(viewModel: viewModel)
             }
-            
+            .sheet(item: $selectedJob) { job in
+                EditJobView(viewModel: viewModel, job: job)
+            }
         }
-        
-        
     }
 }
+
 
 #Preview {
     ContentView()

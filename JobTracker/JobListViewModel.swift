@@ -18,4 +18,12 @@ class JobListViewModel: ObservableObject {
     func deleteJob(at offsets: IndexSet) {
         jobs.remove(atOffsets: offsets)
     }
+
+    func updateJob(job: Job, newTitle: String, newCompany: String, newStatus: JobStatus) {
+        if let index = jobs.firstIndex(where: { $0.id == job.id }) {
+            jobs[index].title = newTitle
+            jobs[index].company = newCompany
+            jobs[index].status = newStatus
+        }
+    }
 }
