@@ -11,6 +11,9 @@
 		706D8F702C3F429E0092AC10 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D8F6F2C3F429E0092AC10 /* ContentView.swift */; };
 		706D8F722C3F42A20092AC10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 706D8F712C3F42A20092AC10 /* Assets.xcassets */; };
 		706D8F752C3F42A20092AC10 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 706D8F742C3F42A20092AC10 /* Preview Assets.xcassets */; };
+		706D8F7C2C3F42C60092AC10 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D8F7B2C3F42C60092AC10 /* Job.swift */; };
+		706D8F7E2C3F43710092AC10 /* JobListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D8F7D2C3F43710092AC10 /* JobListViewModel.swift */; };
+		706D8F802C3F45850092AC10 /* AddJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D8F7F2C3F45850092AC10 /* AddJobView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +22,9 @@
 		706D8F6F2C3F429E0092AC10 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		706D8F712C3F42A20092AC10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		706D8F742C3F42A20092AC10 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		706D8F7B2C3F42C60092AC10 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
+		706D8F7D2C3F43710092AC10 /* JobListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobListViewModel.swift; sourceTree = "<group>"; };
+		706D8F7F2C3F45850092AC10 /* AddJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddJobView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +59,9 @@
 			children = (
 				706D8F6D2C3F429E0092AC10 /* JobTrackerApp.swift */,
 				706D8F6F2C3F429E0092AC10 /* ContentView.swift */,
+				706D8F7F2C3F45850092AC10 /* AddJobView.swift */,
+				706D8F7B2C3F42C60092AC10 /* Job.swift */,
+				706D8F7D2C3F43710092AC10 /* JobListViewModel.swift */,
 				706D8F712C3F42A20092AC10 /* Assets.xcassets */,
 				706D8F732C3F42A20092AC10 /* Preview Content */,
 			);
@@ -137,7 +146,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				706D8F802C3F45850092AC10 /* AddJobView.swift in Sources */,
+				706D8F7E2C3F43710092AC10 /* JobListViewModel.swift in Sources */,
 				706D8F702C3F429E0092AC10 /* ContentView.swift in Sources */,
+				706D8F7C2C3F42C60092AC10 /* Job.swift in Sources */,
 				706D8F6E2C3F429E0092AC10 /* JobTrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

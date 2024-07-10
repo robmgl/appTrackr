@@ -8,14 +8,42 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var viewModel = JobListViewModel()
+    @State private var showingAddJobView = false
+    
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        
+        NavigationView {
+            
+            List {
+                ForEach(viewModel.jobs) { job in
+                    VStack(alignment: .leading) {
+                        Text(job.title)
+                            .font(.headline)
+                        Text("Company: \(job.company)")
+                        Text("Status: \(job.status.rawValue)")
+                    }
+                }
+                .onDelete(perform: viewModel.deleteJob)
+            }
+            .navigationTitle("Job Tracker")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showingAddJobView = true
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
+            .sheet(isPresented: $showingAddJobView) {
+                AddJobView(viewModel: viewModel)
+            }
+            
         }
-        .padding()
+        
+        
     }
 }
 
