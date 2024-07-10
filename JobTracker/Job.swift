@@ -16,10 +16,11 @@ enum JobStatus: String, CaseIterable, Identifiable, Codable {
     var id: String { rawValue }
 }
 
-struct Job: Identifiable, Codable {
+struct Job: Identifiable, Codable, Equatable {
     let id: UUID
     var title: String
     var company: String
     var status: JobStatus
 }
+
 

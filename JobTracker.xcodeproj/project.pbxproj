@@ -15,6 +15,7 @@
 		706D8F7E2C3F43710092AC10 /* JobListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D8F7D2C3F43710092AC10 /* JobListViewModel.swift */; };
 		706D8F802C3F45850092AC10 /* AddJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D8F7F2C3F45850092AC10 /* AddJobView.swift */; };
 		706D8F822C3F47D00092AC10 /* EditJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D8F812C3F47D00092AC10 /* EditJobView.swift */; };
+		706D8F842C3F4E3F0092AC10 /* JobDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D8F832C3F4E3F0092AC10 /* JobDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		706D8F7D2C3F43710092AC10 /* JobListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobListViewModel.swift; sourceTree = "<group>"; };
 		706D8F7F2C3F45850092AC10 /* AddJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddJobView.swift; sourceTree = "<group>"; };
 		706D8F812C3F47D00092AC10 /* EditJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditJobView.swift; sourceTree = "<group>"; };
+		706D8F832C3F4E3F0092AC10 /* JobDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 			children = (
 				706D8F6D2C3F429E0092AC10 /* JobTrackerApp.swift */,
 				706D8F6F2C3F429E0092AC10 /* ContentView.swift */,
+				706D8F832C3F4E3F0092AC10 /* JobDetailsView.swift */,
 				706D8F7F2C3F45850092AC10 /* AddJobView.swift */,
 				706D8F7B2C3F42C60092AC10 /* Job.swift */,
 				706D8F7D2C3F43710092AC10 /* JobListViewModel.swift */,
@@ -155,6 +158,7 @@
 				706D8F702C3F429E0092AC10 /* ContentView.swift in Sources */,
 				706D8F7C2C3F42C60092AC10 /* Job.swift in Sources */,
 				706D8F6E2C3F429E0092AC10 /* JobTrackerApp.swift in Sources */,
+				706D8F842C3F4E3F0092AC10 /* JobDetailsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

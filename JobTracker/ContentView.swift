@@ -11,7 +11,7 @@ struct ContentView: View {
     @StateObject private var viewModel = JobListViewModel()
     @State private var showingAddJobView = false
     @State private var selectedJob: Job? = nil
-    
+
     var body: some View {
         NavigationView {
             VStack {
@@ -19,7 +19,7 @@ struct ContentView: View {
                 TextField("Search by job title", text: $viewModel.searchText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
-                
+
                 List {
                     ForEach(viewModel.filteredJobs) { job in
                         VStack(alignment: .leading) {
@@ -48,12 +48,31 @@ struct ContentView: View {
             .sheet(isPresented: $showingAddJobView) {
                 AddJobView(viewModel: viewModel)
             }
-            .sheet(item: $selectedJob) { job in
-                EditJobView(viewModel: viewModel, job: job)
+            .background(
+                NavigationLink(
+                    destination: JobDetailsView(viewModel: viewModel, job: selectedJob ?? Job(id: UUID(), title: "", company: "", status: .applied)),
+                    isActive: Binding(
+                        get: { selectedJob != nil },
+                        set: { isActive in
+                            if !isActive { selectedJob = nil }
+                        }
+                    ),
+                    label: { EmptyView() }
+                )
+                .hidden()
+            )
+            .onChange(of: selectedJob) { newJob in
+                if newJob == nil {
+                    // If selectedJob is nil, pop back to the ContentView
+                    // This action is handled by the NavigationLink in the background
+                }
             }
         }
     }
 }
+
+
+
 
 
 

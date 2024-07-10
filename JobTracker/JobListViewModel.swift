@@ -10,6 +10,7 @@ import SwiftUI
 class JobListViewModel: ObservableObject {
     @Published var jobs: [Job] = []
     @Published var searchText = ""
+    @Published var selectedJobToEdit: Job?  // Added property for the selected job to edit
 
     private let userDefaultsKey = "jobs"
 
@@ -64,4 +65,6 @@ class JobListViewModel: ObservableObject {
         }
     }
 }
+
+
 
