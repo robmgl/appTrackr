@@ -20,13 +20,13 @@ struct JobDetailsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Job Title: \(job.title)")
-                .font(.headline)
             Text("Company: \(job.company)")
+                .font(.headline)
+            Text("Job Title: \(job.title)")
                 .font(.subheadline)
             Text("Status: \(job.status.rawValue)")
                 .font(.subheadline)
-            Text("Date Added: \(dateFormatter.string(from: job.dateAdded))") // New line
+            Text("Date Added: \(dateFormatter.string(from: job.dateAdded))")
                 .font(.subheadline)
                 .foregroundColor(.gray)
             
@@ -50,6 +50,8 @@ struct JobDetailsView: View {
                     Image(systemName: job.liked ? "heart.fill" : "heart")
                         .foregroundColor(job.liked ? .red : .gray)
                         .font(.title)
+                        .scaleEffect(job.liked ? 1.2 : 1.0) // Slightly increase size when liked
+                        .animation(.easeInOut(duration: 0.2)) // Add animation
                 }
             }
         }
@@ -57,6 +59,7 @@ struct JobDetailsView: View {
         .navigationTitle("Job Details")
     }
 }
+
 
 
 
