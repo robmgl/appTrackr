@@ -63,7 +63,15 @@ class JobListViewModel: ObservableObject {
             saveJobs()
         }
     }
+
+    func toggleLike(job: Job) {
+        if let index = jobs.firstIndex(where: { $0.id == job.id }) {
+            jobs[index].liked.toggle()
+            saveJobs()
+        }
+    }
 }
+
 
 
 

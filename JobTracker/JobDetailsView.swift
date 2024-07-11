@@ -32,19 +32,32 @@ struct JobDetailsView: View {
             
             Spacer()
             
-            NavigationLink(destination: EditJobView(viewModel: viewModel, job: $job)) {
-                Text("Edit Job")
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-                    .padding(.bottom, 20)
+            HStack {
+                NavigationLink(destination: EditJobView(viewModel: viewModel, job: $job)) {
+                    Text("Edit Job")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                        .padding(.bottom, 20)
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    viewModel.toggleLike(job: job)
+                }) {
+                    Image(systemName: job.liked ? "heart.fill" : "heart")
+                        .foregroundColor(job.liked ? .red : .gray)
+                        .font(.title)
+                }
             }
         }
         .padding()
         .navigationTitle("Job Details")
     }
 }
+
 
 
 

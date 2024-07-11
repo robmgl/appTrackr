@@ -29,18 +29,37 @@ struct ContentView: View {
 
                 List {
                     ForEach(viewModel.filteredJobs) { job in
-                        VStack(alignment: .leading) {
-                            Text(job.title)
-                                .font(.headline)
-                            Text("Company: \(job.company)")
-                            Text("Status: \(job.status.rawValue)")
-                            Text("Date Added: \(dateFormatter.string(from: job.dateAdded))") // New line
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(job.title)
+                                    .font(.headline)
+                                Text("Company: \(job.company)")
+                                Text("Status: \(job.status.rawValue)")
+                                Text("Date Added: \(dateFormatter.string(from: job.dateAdded))") // New line
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+
+                            Spacer()
+
+                            Button(action: {
+                                withAnimation {
+                                    viewModel.toggleLike(job: job)
+                                }
+                            }) {
+                                Image(systemName: job.liked ? "heart.fill" : "heart")
+                                    .foregroundColor(job.liked ? .red : .gray)
+                                    .font(.system(size: 28)) // Make the heart bigger
+                                    .scaleEffect(job.liked ? 1.2 : 1.0) // Slightly increase size when liked
+                            }
+                            .buttonStyle(PlainButtonStyle()) // Ensure Button style doesn't add any default behavior
                         }
                         .onTapGesture {
-                            selectedJob = job
-                            showingJobDetails = true
+                            // Only activate this when tapping on the card itself, not the heart
+                            if selectedJob != job {
+                                selectedJob = job
+                                showingJobDetails = true
+                            }
                         }
                     }
                     .onDelete(perform: viewModel.deleteJob)
@@ -79,6 +98,11 @@ struct ContentView: View {
         }
     }
 }
+
+
+
+
+
 
 
 

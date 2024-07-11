@@ -19,15 +19,18 @@ struct Job: Identifiable, Codable, Equatable {
     var company: String
     var status: JobStatus
     let dateAdded: Date // New property
+    var liked: Bool // New property to track if the job is liked
     
-    init(id: UUID, title: String, company: String, status: JobStatus, dateAdded: Date = Date()) {
+    init(id: UUID, title: String, company: String, status: JobStatus, dateAdded: Date = Date(), liked: Bool = false) {
         self.id = id
         self.title = title
         self.company = company
         self.status = status
         self.dateAdded = dateAdded
+        self.liked = liked
     }
 }
+
 
 
 
