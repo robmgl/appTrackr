@@ -43,7 +43,12 @@ struct EditJobView: View {
 
             Section {
                 Button(action: {
-                    viewModel.updateJob(job: job, newTitle: newTitle, newCompany: newCompany, newStatus: newStatus)
+                    // Perform the save action
+                    withAnimation {
+                        viewModel.updateJob(job: job, newTitle: newTitle, newCompany: newCompany, newStatus: newStatus)
+                        // Animate the transition back to the previous screen
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }) {
                     Text("Save Changes")
                         .frame(maxWidth: .infinity)
@@ -51,6 +56,8 @@ struct EditJobView: View {
                         .background(Color.accentColor)
                         .foregroundColor(.white)
                         .cornerRadius(8)
+                        .scaleEffect(1.1) // Slightly increase the button size
+                        .animation(.easeInOut(duration: 0.2), value: 1.1) // Add an animation to the button
                 }
             }
         }
