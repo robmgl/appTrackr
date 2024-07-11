@@ -56,7 +56,7 @@ struct JobDetailsView: View {
             }
         }
         .padding()
-        .navigationTitle("Job Details")
+        .navigationTitle("Job Details") // Unchanged title
     }
 }
 

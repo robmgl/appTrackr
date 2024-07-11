@@ -45,7 +45,7 @@ struct EditJobView: View {
                 }
             }
         }
-        .navigationTitle("Edit Job")
+        .navigationTitle("Edit Job") // Title for Edit Job view
         .onChange(of: job) { _ in
             // This will trigger whenever the job binding changes, which should be handled in the parent view
         }

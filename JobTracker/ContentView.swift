@@ -32,7 +32,7 @@ struct ContentView: View {
                     .onDelete(perform: viewModel.deleteJob)
                 }
             }
-            .navigationTitle("Job Tracker")
+            .navigationTitle("AppTrackr") // Updated title
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
@@ -65,7 +65,6 @@ struct ContentView: View {
         }
     }
 }
-
 
 
 
