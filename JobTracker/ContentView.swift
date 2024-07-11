@@ -11,6 +11,13 @@ struct ContentView: View {
     @StateObject private var viewModel = JobListViewModel()
     @State private var showingAddJobView = false
     @State private var selectedJob: Job? = nil
+    @State private var showingJobDetails = false
+
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        return formatter
+    }()
 
     var body: some View {
         NavigationView {
@@ -27,12 +34,16 @@ struct ContentView: View {
                                 .font(.headline)
                             Text("Company: \(job.company)")
                             Text("Status: \(job.status.rawValue)")
+                            Text("Date Added: \(dateFormatter.string(from: job.dateAdded))") // New line
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
                         }
                         .onTapGesture {
                             selectedJob = job
+                            showingJobDetails = true
                         }
                     }
-                    .onDelete(perform: viewModel.deleteJob) // Ensure this is here
+                    .onDelete(perform: viewModel.deleteJob)
                 }
             }
             .navigationTitle("Job Tracker")
@@ -50,26 +61,25 @@ struct ContentView: View {
             }
             .background(
                 NavigationLink(
-                    destination: JobDetailsView(viewModel: viewModel, job: selectedJob ?? Job(id: UUID(), title: "", company: "", status: .applied)),
-                    isActive: Binding(
-                        get: { selectedJob != nil },
-                        set: { isActive in
-                            if !isActive { selectedJob = nil }
-                        }
-                    ),
+                    destination: selectedJob.map { JobDetailsView(viewModel: viewModel, job: .constant($0)) },
+                    isActive: $showingJobDetails,
                     label: { EmptyView() }
                 )
                 .hidden()
             )
             .onChange(of: selectedJob) { newJob in
-                if newJob == nil {
-                    // If selectedJob is nil, pop back to the ContentView
-                    // This action is handled by the NavigationLink in the background
+                // Ensure that the selected job is updated correctly
+                if let updatedJob = newJob {
+                    if let index = viewModel.jobs.firstIndex(where: { $0.id == updatedJob.id }) {
+                        viewModel.jobs[index] = updatedJob
+                        viewModel.saveJobs()
+                    }
                 }
             }
         }
     }
 }
+
 
 
 
