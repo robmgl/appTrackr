@@ -5,10 +5,14 @@
 //  Created by Rob Miguel on 7/10/24.
 //
 
-import SwiftUI
+import Foundation
 
 class JobListViewModel: ObservableObject {
-    @Published var jobs: [Job] = []
+    @Published var jobs: [Job] = [] {
+        didSet {
+            saveJobs()
+        }
+    }
     @Published var searchText = ""
 
     private let userDefaultsKey = "jobs"
@@ -17,42 +21,12 @@ class JobListViewModel: ObservableObject {
         loadJobs()
     }
 
-    var filteredJobs: [Job] {
-        jobs.filter { job in
-            searchText.isEmpty || job.title.lowercased().contains(searchText.lowercased())
-        }
-    }
-
-    func loadJobs() {
-        if let data = UserDefaults.standard.data(forKey: userDefaultsKey) {
-            let decoder = JSONDecoder()
-            do {
-                jobs = try decoder.decode([Job].self, from: data)
-            } catch {
-                print("Failed to load jobs: \(error)")
-            }
-        }
-    }
-
-    func saveJobs() {
-        let encoder = JSONEncoder()
-        do {
-            let data = try encoder.encode(jobs)
-            UserDefaults.standard.set(data, forKey: userDefaultsKey)
-        } catch {
-            print("Failed to save jobs: \(error)")
-        }
-    }
-
-    func addJob(title: String, company: String, status: JobStatus) {
-        let newJob = Job(id: UUID(), title: title, company: company, status: status, dateAdded: Date())
-        jobs.append(newJob)
-        saveJobs()
+    func addJob(_ job: Job) {
+        jobs.append(job)
     }
 
     func deleteJob(at offsets: IndexSet) {
         jobs.remove(atOffsets: offsets)
-        saveJobs()
     }
 
     func updateJob(job: Job, newTitle: String, newCompany: String, newStatus: JobStatus) {
@@ -60,17 +34,46 @@ class JobListViewModel: ObservableObject {
             jobs[index].title = newTitle
             jobs[index].company = newCompany
             jobs[index].status = newStatus
-            saveJobs()
         }
     }
 
     func toggleLike(job: Job) {
         if let index = jobs.firstIndex(where: { $0.id == job.id }) {
             jobs[index].liked.toggle()
-            saveJobs()
+        }
+    }
+
+    var filteredJobs: [Job] {
+        if searchText.isEmpty {
+            return jobs
+        } else {
+            return jobs.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+        }
+    }
+
+    private func saveJobs() {
+        do {
+            let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .iso8601 // Use ISO8601 date encoding strategy
+            let data = try encoder.encode(jobs)
+            UserDefaults.standard.set(data, forKey: userDefaultsKey)
+        } catch {
+            print("Failed to encode jobs: \(error.localizedDescription)")
+        }
+    }
+
+    private func loadJobs() {
+        guard let data = UserDefaults.standard.data(forKey: userDefaultsKey) else { return }
+        do {
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601 // Use ISO8601 date decoding strategy
+            jobs = try decoder.decode([Job].self, from: data)
+        } catch {
+            print("Failed to decode jobs: \(error.localizedDescription)")
         }
     }
 }
+
 
 
 

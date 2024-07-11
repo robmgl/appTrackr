@@ -10,16 +10,17 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var viewModel = JobListViewModel()
     @State private var showingAddJobView = false
-    @State private var selectedJob: Job? = nil
     @State private var showingJobDetails = false
+    @State private var selectedJob: Job?
 
     var body: some View {
         NavigationView {
             VStack {
-                // Search Bar
                 TextField("Search by job title", text: $viewModel.searchText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
+                    .background(Color.white)
+                    .cornerRadius(8)
 
                 List {
                     ForEach(viewModel.filteredJobs) { job in
@@ -31,14 +32,16 @@ struct ContentView: View {
                     }
                     .onDelete(perform: viewModel.deleteJob)
                 }
+                .listStyle(PlainListStyle())
             }
-            .navigationTitle("AppTrackr") // Updated title
+            .navigationTitle("AppTrack")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         showingAddJobView = true
                     }) {
                         Image(systemName: "plus")
+                            .foregroundColor(.accentColor)
                     }
                 }
             }
@@ -53,18 +56,12 @@ struct ContentView: View {
                 )
                 .hidden()
             )
-            .onChange(of: selectedJob) { newJob in
-                // Ensure that the selected job is updated correctly
-                if let updatedJob = newJob {
-                    if let index = viewModel.jobs.firstIndex(where: { $0.id == updatedJob.id }) {
-                        viewModel.jobs[index] = updatedJob
-                        viewModel.saveJobs()
-                    }
-                }
-            }
         }
     }
 }
+
+
+
 
 
 

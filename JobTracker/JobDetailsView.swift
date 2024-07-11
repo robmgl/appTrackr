@@ -20,14 +20,17 @@ struct JobDetailsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
+            Text("Job Title: \(job.title)")
+                .font(.title2)
+                .foregroundColor(.primary)
             Text("Company: \(job.company)")
                 .font(.headline)
-            Text("Job Title: \(job.title)")
-                .font(.subheadline)
+                .foregroundColor(.secondary)
             Text("Status: \(job.status.rawValue)")
-                .font(.subheadline)
+                .font(.body)
+                .foregroundColor(.gray)
             Text("Date Added: \(dateFormatter.string(from: job.dateAdded))")
-                .font(.subheadline)
+                .font(.body)
                 .foregroundColor(.gray)
             
             Spacer()
@@ -36,7 +39,7 @@ struct JobDetailsView: View {
                 NavigationLink(destination: EditJobView(viewModel: viewModel, job: $job)) {
                     Text("Edit Job")
                         .padding()
-                        .background(Color.blue)
+                        .background(Color.accentColor)
                         .foregroundColor(.white)
                         .cornerRadius(8)
                         .padding(.bottom, 20)
@@ -48,17 +51,22 @@ struct JobDetailsView: View {
                     viewModel.toggleLike(job: job)
                 }) {
                     Image(systemName: job.liked ? "heart.fill" : "heart")
-                        .foregroundColor(job.liked ? .red : .gray)
-                        .font(.title)
-                        .scaleEffect(job.liked ? 1.2 : 1.0) // Slightly increase size when liked
-                        .animation(.easeInOut(duration: 0.2)) // Add animation
+                        .foregroundColor(job.liked ? Color("HeartColor") : .gray)
+                        .font(.system(size: 28)) // Make the heart bigger
                 }
             }
         }
         .padding()
-        .navigationTitle("Job Details") // Unchanged title
+        .background(Color.white)
+        .cornerRadius(12)
+        .shadow(radius: 4)
+        .navigationTitle("Job Details")
     }
 }
+
+
+
+
 
 
 

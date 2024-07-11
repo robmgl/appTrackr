@@ -12,45 +12,54 @@ struct EditJobView: View {
     @ObservedObject var viewModel: JobListViewModel
     @Binding var job: Job
 
-    @State private var editedTitle: String
-    @State private var editedCompany: String
-    @State private var editedStatus: JobStatus
+    @State private var newTitle: String
+    @State private var newCompany: String
+    @State private var newStatus: JobStatus
 
     init(viewModel: JobListViewModel, job: Binding<Job>) {
         self.viewModel = viewModel
-        self._job = job
-        self._editedTitle = State(initialValue: job.wrappedValue.title)
-        self._editedCompany = State(initialValue: job.wrappedValue.company)
-        self._editedStatus = State(initialValue: job.wrappedValue.status)
+        _job = job
+        _newTitle = State(initialValue: job.wrappedValue.title)
+        _newCompany = State(initialValue: job.wrappedValue.company)
+        _newStatus = State(initialValue: job.wrappedValue.status)
     }
 
     var body: some View {
         Form {
-            Section(header: Text("Edit Job")) {
-                TextField("Company", text: $editedCompany) // Company name is first
-                TextField("Title", text: $editedTitle) // Job title is second
-                Picker("Status", selection: $editedStatus) {
-                    ForEach(JobStatus.allCases, id: \.self) { status in
+            Section(header: Text("Edit Job Details")) {
+                TextField("Company", text: $newCompany)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.vertical, 4)
+                TextField("Title", text: $newTitle)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.vertical, 4)
+                Picker("Status", selection: $newStatus) {
+                    ForEach(JobStatus.allCases) { status in
                         Text(status.rawValue).tag(status)
                     }
                 }
+                .pickerStyle(MenuPickerStyle())
             }
 
             Section {
                 Button(action: {
-                    viewModel.updateJob(job: job, newTitle: editedTitle, newCompany: editedCompany, newStatus: editedStatus)
-                    presentationMode.wrappedValue.dismiss()
+                    viewModel.updateJob(job: job, newTitle: newTitle, newCompany: newCompany, newStatus: newStatus)
                 }) {
                     Text("Save Changes")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.accentColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
                 }
             }
         }
-        .navigationTitle("Edit Job") // Title for Edit Job view
-        .onChange(of: job) { _ in
-            // This will trigger whenever the job binding changes, which should be handled in the parent view
-        }
+        .navigationTitle("Edit Job")
+        .background(Color("BackgroundColor").edgesIgnoringSafeArea(.all))
     }
 }
+
+
 
 
 
