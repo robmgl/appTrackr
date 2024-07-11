@@ -20,10 +20,10 @@ struct JobCardView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(job.title)
+                Text(job.company)
                     .font(.headline)
                     .foregroundColor(.primary)
-                Text(job.company)
+                Text(job.title)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 Text(job.status.rawValue)

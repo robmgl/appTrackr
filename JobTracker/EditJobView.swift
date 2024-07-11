@@ -50,13 +50,11 @@ struct EditJobView: View {
                 }) {
                     Text("Save Changes")
                         .padding()
-                        .background(Color.clear)
-                        .foregroundColor(Color.accentColor)
+                        .background(.blue)
+                        .foregroundColor(.white)
                         .border(Color.accentColor, width: 2)
-                        .cornerRadius(30)  // Pill shape
+                        .cornerRadius(10)  // Pill shape
                         .frame(maxWidth: .infinity)
-                        .scaleEffect(1.1) // Slightly increase the button size
-                        .animation(.easeInOut(duration: 0.2), value: 1.1) // Add an animation to the button
                 }
             }
         }
