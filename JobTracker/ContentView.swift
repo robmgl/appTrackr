@@ -34,7 +34,7 @@ struct ContentView: View {
                 }
                 .listStyle(PlainListStyle())
             }
-            .navigationTitle("AppTrack")
+            .navigationTitle("AppTrackr")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
