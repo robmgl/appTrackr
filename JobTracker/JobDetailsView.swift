@@ -39,10 +39,11 @@ struct JobDetailsView: View {
                 NavigationLink(destination: EditJobView(viewModel: viewModel, job: $job)) {
                     Text("Edit Job")
                         .padding()
-                        .background(Color.accentColor)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                        .padding(.bottom, 20)
+                        .background(Color.clear)
+                        .foregroundColor(Color.accentColor)
+                        .border(Color.accentColor, width: 2)
+                        .cornerRadius(30)  // Pill shape
+                        .frame(maxWidth: .infinity)
                 }
                 
                 Spacer()
@@ -63,6 +64,7 @@ struct JobDetailsView: View {
         .navigationTitle("Job Details")
     }
 }
+
 
 
 

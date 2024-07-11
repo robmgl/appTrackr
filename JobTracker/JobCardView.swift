@@ -19,39 +19,34 @@ struct JobCardView: View {
 
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(job.company)
-                    .font(.body)
-                    .foregroundColor(.primary)
+            VStack(alignment: .leading) {
                 Text(job.title)
-                    .font(.body)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                Text(job.company)
+                    .font(.subheadline)
                     .foregroundColor(.secondary)
-                Text("Status: \(job.status.rawValue)")
+                Text(job.status.rawValue)
                     .font(.footnote)
                     .foregroundColor(.gray)
                 Text("Date Added: \(dateFormatter.string(from: job.dateAdded))")
                     .font(.footnote)
                     .foregroundColor(.gray)
             }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
-            .shadow(radius: 4)
-            
             Spacer()
-            
             Button(action: {
                 viewModel.toggleLike(job: job)
             }) {
                 Image(systemName: job.liked ? "heart.fill" : "heart")
                     .foregroundColor(job.liked ? Color("HeartColor") : .gray)
-                    .font(.system(size: 24)) // Make the heart bigger
-                    .scaleEffect(job.liked ? 1.2 : 1.0) // Slightly increase size when liked
-                    .animation(.easeInOut(duration: 0.2)) // Add animation
+                    .font(.system(size: 24)) // Adjust heart size
             }
-            .buttonStyle(PlainButtonStyle()) // Ensure Button style doesn't add any default behavior
         }
-        .frame(maxWidth: .infinity) // Ensure the card takes up the full width of the List
+        .padding()
+        .background(Color.white)
+        .cornerRadius(12)
+        .shadow(radius: 4)
+        .frame(maxWidth: .infinity)  // Ensure it takes full width
     }
 }
 
