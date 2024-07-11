@@ -68,6 +68,7 @@ struct JobDetailsView: View {
 
 
 
+
 //#Preview {
 //    JobDetailsView(viewModel: <#JobListViewModel#>, job: <#Job#>)
 //}
