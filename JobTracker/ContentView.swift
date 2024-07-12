@@ -12,7 +12,7 @@ struct ContentView: View {
     @State private var showingAddJobView = false
     @State private var showingJobDetails = false
     @State private var selectedJob: Job?
-
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -21,18 +21,33 @@ struct ContentView: View {
                     .padding()
                     .background(Color.white)
                     .cornerRadius(8)
-
-                List {
-                    ForEach(viewModel.filteredJobs) { job in
-                        JobCardView(viewModel: viewModel, job: job)
-                            .onTapGesture {
-                                selectedJob = job
-                                showingJobDetails = true
-                            }
+                
+                if viewModel.filteredJobs.isEmpty {
+                    VStack {
+                        Image(systemName: "briefcase.fill")
+                            .font(.system(size: 50))
+                            .foregroundColor(.gray)
+                        Text("No Applications")
+                            .font(.title2)
+                            .foregroundColor(.gray)
                     }
-                    .onDelete(perform: viewModel.deleteJob)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(.white)
+                    .cornerRadius(10)
+                } else {
+                    
+                    List {
+                        ForEach(viewModel.filteredJobs) { job in
+                            JobCardView(viewModel: viewModel, job: job)
+                                .onTapGesture {
+                                    selectedJob = job
+                                    showingJobDetails = true
+                                }
+                        }
+                        .onDelete(perform: viewModel.deleteJob)
+                    }
+                    .listStyle(PlainListStyle())
                 }
-                .listStyle(PlainListStyle())
             }
             .navigationTitle("AppTrackr")
             .toolbar {
@@ -59,20 +74,6 @@ struct ContentView: View {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #Preview {
