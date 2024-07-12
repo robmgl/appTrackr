@@ -18,35 +18,39 @@ struct JobCardView: View {
     }()
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(job.company)
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                Text(job.title)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                Text(job.status.rawValue)
-                    .font(.footnote)
-                    .foregroundColor(.gray)
-                Text("Date Added: \(dateFormatter.string(from: job.dateAdded))")
-                    .font(.footnote)
-                    .foregroundColor(.gray)
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(job.company)
+                        .font(.system(size: 25))
+                        .bold()
+                    Text(job.title)
+                        .font(.subheadline)
+                    Text("Status: \(job.status.rawValue)")
+                        .font(.subheadline)
+                    Text("Date Added: \(dateFormatter.string(from: job.dateAdded))")
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    viewModel.toggleLike(job: job)
+                }) {
+                    Image(systemName: job.liked ? "heart.fill" : "heart")
+                        .foregroundColor(job.liked ? .red : .gray)
+                        .font(.title2)
+                }
             }
-            Spacer()
-            Button(action: {
-                viewModel.toggleLike(job: job)
-            }) {
-                Image(systemName: job.liked ? "heart.fill" : "heart")
-                    .foregroundColor(job.liked ? Color("HeartColor") : .gray)
-                    .font(.system(size: 24)) // Adjust heart size
-            }
+            .padding()
+            .background(Color.white)
+            .cornerRadius(10)
+            .shadow(radius: 2)
         }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(12)
-        .shadow(radius: 4)
-        .frame(maxWidth: .infinity)  // Ensure it takes full width
+        .onChange(of: job.liked) { newValue in
+            // Handle any additional changes if needed
+        }
     }
 }
 
