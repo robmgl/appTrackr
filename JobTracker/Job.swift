@@ -9,16 +9,16 @@ import SwiftUI
 import Combine
 
 enum JobStatus: String, CaseIterable, Identifiable, Codable {
-    case applied = "Applied"
-    case phoneScreen = "Phone Screen"
-    case firstInterview = "First Interview"
-    case secondInterview = "Second Interview"
-    case finalInterview = "Final Interview"
-    case onSite = "On Site"
-    case offer = "Offer"
-    case questionable = "Questionable"
-    case rejected = "Rejected"
-    case toApply = "To Apply"
+    case applied = "Applied ✅"
+    case phoneScreen = "Phone Screen 📞"
+    case firstInterview = "First Interview 🙂"
+    case secondInterview = "Second Interview 😃"
+    case finalInterview = "Final Interview 😁"
+    case onSite = "On Site 🏢"
+    case offer = "Offer 🥳"
+    case questionable = "Questionable❓"
+    case rejected = "Rejected ❌"
+    case toApply = "To Apply ☑️"
     
     var id: String { rawValue }
 }
