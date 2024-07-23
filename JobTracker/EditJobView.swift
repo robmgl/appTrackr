@@ -44,7 +44,8 @@ struct EditJobView: View {
             Section {
                 Button(action: {
                     withAnimation {
-                        viewModel.updateJob(job: job, newTitle: newTitle, newCompany: newCompany, newStatus: newStatus)
+                        viewModel.updateJob(job, newStatus: newStatus)
+//                        viewModel.updateJob(job: job, newTitle: newTitle, newCompany: newCompany, newStatus: newStatus)
                         presentationMode.wrappedValue.dismiss()
                     }
                 }) {

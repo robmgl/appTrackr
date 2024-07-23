@@ -16,48 +16,47 @@ struct JobCardView: View {
         formatter.dateFormat = "MM/dd/yyyy"
         return formatter
     }()
-
+    
+    // Get the first letter of the company name for the icon
+    private var companyInitial: String {
+        String(job.company.prefix(1)).lowercased()
+    }
+    
+    // Get the corresponding system image name based on the company initial
+    private var companyIconName: String {
+        "\(companyInitial).circle.fill"
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(job.company)
-                        .font(.system(size: 25))
-                        .bold()
                     Text(job.title)
-                        .font(.subheadline)
-                    Text("Status: \(job.status.rawValue)")
-                        .font(.subheadline)
+                        .font(.system(size: 22))
+                        .bold()
+                    Text("@ \(job.company)")
+                        .font(.system(size: 17))
+                    HStack {
+                        Text("Status: \(job.status.rawValue)")
+                            .font(.subheadline)
+                            .bold()
+                    }
+                    if let updatedDate = job.updatedDate {
+                        Text("Updated: \(dateFormatter.string(from: updatedDate))")
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                    }
                     Text("Date Added: \(dateFormatter.string(from: job.dateAdded))")
                         .font(.footnote)
                         .foregroundColor(.gray)
                 }
-                
                 Spacer()
-                
-                Button(action: {
-                    viewModel.toggleLike(job: job)
-                }) {
-                    Image(systemName: job.liked ? "heart.fill" : "heart")
-                        .foregroundColor(job.liked ? .red : .gray)
-                        .font(.title2)
-                }
             }
             .padding()
             .background(Color.white)
             .cornerRadius(10)
-            .shadow(radius: 2)
-        }
-        .onChange(of: job.liked) { newValue in
-            // Handle any additional changes if needed
+            .shadow(radius: 3)
         }
     }
 }
 
-
-
-
-
-//#Preview {
-//    JobCardView()
-//}

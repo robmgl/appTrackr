@@ -5,7 +5,8 @@
 //  Created by Rob Miguel on 7/10/24.
 //
 
-import Foundation
+import SwiftUI
+import Combine
 
 enum JobStatus: String, CaseIterable, Identifiable, Codable {
     case applied = "Applied"
@@ -22,54 +23,47 @@ enum JobStatus: String, CaseIterable, Identifiable, Codable {
     var id: String { rawValue }
 }
 
-class Job: Identifiable, ObservableObject, Equatable, Codable {
-    let id: UUID
-    @Published var title: String
+class Job: ObservableObject, Identifiable, Codable {
+    let id: String
     @Published var company: String
+    @Published var title: String
     @Published var status: JobStatus
-    @Published var liked: Bool
-    let dateAdded: Date
+    @Published var dateAdded: Date
+    @Published var updatedDate: Date?  // New property
 
-    init(id: UUID = UUID(), title: String, company: String, status: JobStatus, liked: Bool = false, dateAdded: Date) {
+    private enum CodingKeys: String, CodingKey {
+        case id, company, title, status, dateAdded,updatedDate
+    }
+
+    init(id: String = UUID().uuidString, company: String, title: String, status: JobStatus, dateAdded: Date, updatedDate: Date? = nil) {
         self.id = id
-        self.title = title
         self.company = company
+        self.title = title
         self.status = status
-        self.liked = liked
         self.dateAdded = dateAdded
+        self.updatedDate = updatedDate  // New property
     }
 
-    static func == (lhs: Job, rhs: Job) -> Bool {
-        lhs.id == rhs.id
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case id, title, company, status, liked, dateAdded
-    }
-
+    // Custom init for decoding
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(UUID.self, forKey: .id)
-        title = try container.decode(String.self, forKey: .title)
+        id = try container.decode(String.self, forKey: .id)
         company = try container.decode(String.self, forKey: .company)
+        title = try container.decode(String.self, forKey: .title)
         status = try container.decode(JobStatus.self, forKey: .status)
-        liked = try container.decode(Bool.self, forKey: .liked)
         dateAdded = try container.decode(Date.self, forKey: .dateAdded)
+        updatedDate = try? container.decode(Date.self, forKey: .updatedDate)
     }
 
+    // Custom encode for encoding
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
-        try container.encode(title, forKey: .title)
         try container.encode(company, forKey: .company)
+        try container.encode(title, forKey: .title)
         try container.encode(status, forKey: .status)
-        try container.encode(liked, forKey: .liked)
         try container.encode(dateAdded, forKey: .dateAdded)
+        try? container.encode(updatedDate, forKey: .updatedDate)
     }
 }
-
-
-
-
-
 

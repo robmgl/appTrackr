@@ -11,44 +11,39 @@ struct AddJobView: View {
     @Environment(\.presentationMode) private var presentationMode
     @ObservedObject var viewModel: JobListViewModel
     
-    @State private var title = ""
-    @State private var company = ""
-    @State private var status: JobStatus = .applied
+    @State private var company: String = ""
+    @State private var title: String = ""
+    @State private var status: JobStatus = .toApply
 
     var body: some View {
-        Form {
-            Section(header: Text("Add New Job")) {
-                TextField("Company", text: $company)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.vertical, 4)
-                TextField("Title", text: $title)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.vertical, 4)
-                Picker("Status", selection: $status) {
-                    ForEach(JobStatus.allCases) { status in
-                        Text(status.rawValue).tag(status)
+        NavigationView {
+            Form {
+                Section(header: Text("Job Details")) {
+                    TextField("Company Name", text: $company)
+                    TextField("Job Title", text: $title)
+                    Picker("Status", selection: $status) {
+                        ForEach(JobStatus.allCases) { status in
+                            Text(status.rawValue).tag(status)
+                        }
                     }
                 }
-                .pickerStyle(MenuPickerStyle())
-            }
-
-            Section {
+                
                 Button(action: {
-                    let newJob = Job(title: title, company: company, status: status, dateAdded: Date())
-                    viewModel.addJob(newJob)
-                    presentationMode.wrappedValue.dismiss()
+                    if !company.isEmpty && !title.isEmpty {
+                        viewModel.addJob(company: company, title: title, status: status)
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }) {
                     Text("Add Job")
-                        .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.accentColor)
+                        .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(8)
+                        .font(.headline)
                 }
             }
+            .navigationTitle("Add Job")
         }
-        .navigationTitle("Add Job")
-        .background(Color("BackgroundColor").edgesIgnoringSafeArea(.all))
     }
 }
 

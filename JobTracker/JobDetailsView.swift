@@ -17,7 +17,7 @@ struct JobDetailsView: View {
         formatter.dateFormat = "MM/dd/yyyy"
         return formatter
     }()
-    
+
     // Get the first letter of the company name for the icon
     private var companyInitial: String {
         String(job.company.prefix(1)).lowercased()
@@ -36,12 +36,20 @@ struct JobDetailsView: View {
                 .foregroundColor(.gray)
                 .padding(.bottom, 20)
             
-            Text("Job Title: \(job.company)")
+            Text("Job Title: \(job.title)")
                 .font(.headline)
-            Text("Company: \(job.title)")
+            Text("Company: \(job.company)")
                 .font(.subheadline)
-            Text("Status: \(job.status.rawValue)")
-                .font(.subheadline)
+            HStack {
+                Text("Status: \(job.status.rawValue)")
+                    .font(.subheadline)
+                    .bold()
+                if let updatedDate = job.updatedDate {
+                    Text("Updated: \(dateFormatter.string(from: updatedDate))")
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                }
+            }
             Text("Date Added: \(dateFormatter.string(from: job.dateAdded))")
                 .font(.subheadline)
                 .foregroundColor(.gray)
@@ -50,7 +58,7 @@ struct JobDetailsView: View {
             
             HStack {
                 NavigationLink(destination: EditJobView(viewModel: viewModel, job: $job)) {
-                    Text("Edit Job")
+                    Text("Update Job")
                         .padding()
                         .background(Color.clear)
                         .foregroundColor(.blue)
@@ -60,14 +68,6 @@ struct JobDetailsView: View {
                 }
                 
                 Spacer()
-                
-                Button(action: {
-                    viewModel.toggleLike(job: job)
-                }) {
-                    Image(systemName: job.liked ? "heart.fill" : "heart")
-                        .foregroundColor(job.liked ? .red : .gray)
-                        .font(.title)
-                }
             }
         }
         .padding()
@@ -78,20 +78,3 @@ struct JobDetailsView: View {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//#Preview {
-//    JobDetailsView()
-//}
