@@ -17,7 +17,7 @@ struct JobDetailsView: View {
         formatter.dateFormat = "MM/dd/yyyy"
         return formatter
     }()
-
+    
     // Get the first letter of the company name for the icon
     private var companyInitial: String {
         String(job.company.prefix(1)).lowercased()
@@ -27,7 +27,7 @@ struct JobDetailsView: View {
     private var companyIconName: String {
         "\(companyInitial).circle.fill"
     }
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             // Large icon for the company
@@ -35,20 +35,19 @@ struct JobDetailsView: View {
                 .font(.system(size: 100))
                 .foregroundColor(.gray)
                 .padding(.bottom, 20)
-            
-            Text("Job Title: \(job.title)")
-                .font(.headline)
+                .frame(maxWidth: .infinity, alignment: .center)
             Text("Company: \(job.company)")
-                .font(.subheadline)
-            HStack {
-                Text("Status: \(job.status.rawValue)")
+                .font(.system(size: 30))
+                .bold()
+            Text("Position: \(job.title)")
+                .font(.system(size: 30))
+            Text("Status: \(job.status.rawValue)")
+                .font(.system(size: 20))
+                .bold()
+            if let updatedDate = job.updatedDate {
+                Text("Updated: \(dateFormatter.string(from: updatedDate))")
                     .font(.subheadline)
-                    .bold()
-                if let updatedDate = job.updatedDate {
-                    Text("Updated: \(dateFormatter.string(from: updatedDate))")
-                        .font(.footnote)
-                        .foregroundColor(.gray)
-                }
+                    .foregroundColor(.gray)
             }
             Text("Date Added: \(dateFormatter.string(from: job.dateAdded))")
                 .font(.subheadline)

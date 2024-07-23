@@ -16,7 +16,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TextField("Search by job title", text: $viewModel.searchText)
+                TextField("Search by job title or company", text: $viewModel.searchText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                     .background(Color.white)
