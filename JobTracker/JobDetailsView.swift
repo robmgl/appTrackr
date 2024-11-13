@@ -11,26 +11,23 @@ struct JobDetailsView: View {
     @Environment(\.presentationMode) private var presentationMode
     @ObservedObject var viewModel: JobListViewModel
     @Binding var job: Job
-    
+
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
         return formatter
     }()
-    
-    // Get the first letter of the company name for the icon
+
     private var companyInitial: String {
         String(job.company.prefix(1)).lowercased()
     }
-    
-    // Get the corresponding system image name based on the company initial
+
     private var companyIconName: String {
         "\(companyInitial).circle.fill"
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // Large icon for the company
             Image(systemName: companyIconName)
                 .font(.system(size: 100))
                 .foregroundColor(.gray)
@@ -52,9 +49,7 @@ struct JobDetailsView: View {
             Text("Date Added: \(dateFormatter.string(from: job.dateAdded))")
                 .font(.subheadline)
                 .foregroundColor(.gray)
-            
             Spacer()
-            
             HStack {
                 NavigationLink(destination: EditJobView(viewModel: viewModel, job: $job)) {
                     Text("Update Job")
@@ -65,7 +60,6 @@ struct JobDetailsView: View {
                         .cornerRadius(8)
                         .padding(.bottom, 20)
                 }
-                
                 Spacer()
             }
         }
@@ -76,4 +70,5 @@ struct JobDetailsView: View {
         .navigationTitle("Job Details")
     }
 }
+
 

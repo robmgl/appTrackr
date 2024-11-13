@@ -10,7 +10,7 @@ import SwiftUI
 struct AddJobView: View {
     @Environment(\.presentationMode) private var presentationMode
     @ObservedObject var viewModel: JobListViewModel
-    
+
     @State private var company: String = ""
     @State private var title: String = ""
     @State private var status: JobStatus = .toApply
@@ -27,7 +27,6 @@ struct AddJobView: View {
                         }
                     }
                 }
-                
                 Button(action: {
                     if !company.isEmpty && !title.isEmpty {
                         viewModel.addJob(company: company, title: title, status: status)
@@ -46,6 +45,7 @@ struct AddJobView: View {
         }
     }
 }
+
 
 
 

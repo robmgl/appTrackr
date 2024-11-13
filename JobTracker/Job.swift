@@ -29,10 +29,10 @@ class Job: ObservableObject, Identifiable, Codable {
     @Published var title: String
     @Published var status: JobStatus
     @Published var dateAdded: Date
-    @Published var updatedDate: Date?  // New property
+    @Published var updatedDate: Date?  // Optional updated date property
 
     private enum CodingKeys: String, CodingKey {
-        case id, company, title, status, dateAdded,updatedDate
+        case id, company, title, status, dateAdded, updatedDate
     }
 
     init(id: String = UUID().uuidString, company: String, title: String, status: JobStatus, dateAdded: Date, updatedDate: Date? = nil) {
@@ -41,10 +41,9 @@ class Job: ObservableObject, Identifiable, Codable {
         self.title = title
         self.status = status
         self.dateAdded = dateAdded
-        self.updatedDate = updatedDate  // New property
+        self.updatedDate = updatedDate
     }
-
-    // Custom init for decoding
+    
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
@@ -55,7 +54,6 @@ class Job: ObservableObject, Identifiable, Codable {
         updatedDate = try? container.decode(Date.self, forKey: .updatedDate)
     }
 
-    // Custom encode for encoding
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
@@ -66,4 +64,3 @@ class Job: ObservableObject, Identifiable, Codable {
         try? container.encode(updatedDate, forKey: .updatedDate)
     }
 }
-
