@@ -49,7 +49,7 @@ struct ContentView: View {
                     .listStyle(PlainListStyle())
                 }
             }
-            .navigationTitle("AppTrackr")
+            .navigationTitle("Workfolio")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
