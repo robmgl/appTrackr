@@ -12,45 +12,35 @@ struct ContentView: View {
     @State private var showingAddJobView = false
     @State private var showingJobDetails = false
     @State private var selectedJob: Job?
-    
+    @State private var isReordering = false // Controls the wiggle animation
+
     var body: some View {
         NavigationView {
             VStack {
+                // Search field
                 TextField("Search by job title or company", text: $viewModel.searchText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
-                    .background(Color.white)
-                    .cornerRadius(8)
-                
-                if viewModel.filteredJobs.isEmpty {
-                    VStack {
-                        Image(systemName: "briefcase.fill")
-                            .font(.system(size: 50))
-                            .foregroundColor(.gray)
-                        Text("No Applications")
-                            .font(.title2)
-                            .foregroundColor(.gray)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(.white)
-                    .cornerRadius(10)
-                } else {
-                    
-                    List {
-                        ForEach(viewModel.filteredJobs) { job in
-                            JobCardView(viewModel: viewModel, job: job)
-                                .onTapGesture {
+
+                List {
+                    ForEach(viewModel.filteredJobs) { job in
+                        JobCardView(viewModel: viewModel, job: job, isWiggling: isReordering)
+                            .onTapGesture {
+                                if !isReordering {
                                     selectedJob = job
                                     showingJobDetails = true
                                 }
-                        }
-                        .onDelete(perform: viewModel.deleteJob)
+                            }
                     }
-                    .listStyle(PlainListStyle())
+                    .onMove(perform: moveJob) // Enable drag-to-reorder
                 }
+                .listStyle(PlainListStyle())
             }
             .navigationTitle("Workfolio")
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    EditButton() // Toggles reordering mode
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         showingAddJobView = true
@@ -58,6 +48,12 @@ struct ContentView: View {
                         Image(systemName: "plus")
                             .foregroundColor(.accentColor)
                     }
+                }
+            }
+            .environment(\.editMode, .constant(isReordering ? .active : .inactive)) // Toggle edit mode
+            .onChange(of: isReordering) { _ in
+                withAnimation {
+                    isReordering.toggle() // Toggles wiggle effect on reorder mode
                 }
             }
             .sheet(isPresented: $showingAddJobView) {
@@ -73,7 +69,14 @@ struct ContentView: View {
             )
         }
     }
+    
+    private func moveJob(from source: IndexSet, to destination: Int) {
+        viewModel.jobs.move(fromOffsets: source, toOffset: destination)
+        viewModel.saveJobs() // Ensure this saves the new order
+    }
+
 }
+
 
 
 #Preview {

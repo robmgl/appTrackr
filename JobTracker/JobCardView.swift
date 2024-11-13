@@ -10,6 +10,7 @@ import SwiftUI
 struct JobCardView: View {
     @ObservedObject var viewModel: JobListViewModel
     var job: Job
+    var isWiggling: Bool
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -17,12 +18,10 @@ struct JobCardView: View {
         return formatter
     }()
     
-    // Get the first letter of the company name for the icon
     private var companyInitial: String {
         String(job.company.prefix(1)).lowercased()
     }
     
-    // Get the corresponding system image name based on the company initial
     private var companyIconName: String {
         "\(companyInitial).circle.fill"
     }
@@ -56,7 +55,13 @@ struct JobCardView: View {
             .background(Color.white)
             .cornerRadius(10)
             .shadow(radius: 3)
+            .rotationEffect(isWiggling ? .degrees(Double.random(in: -2...2)) : .zero)
+            .animation(
+                isWiggling ?
+                Animation.easeInOut(duration: 0.15).repeatForever(autoreverses: true) : .default
+            )
         }
     }
 }
+
 
