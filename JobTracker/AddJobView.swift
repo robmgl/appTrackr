@@ -35,6 +35,7 @@ struct AddJobView: View {
                 }) {
                     Text("Add Job")
                         .padding()
+                        .frame(maxWidth: .infinity)
                         .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(8)

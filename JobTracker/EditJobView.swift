@@ -51,6 +51,7 @@ struct EditJobView: View {
                 }) {
                     Text("Save Changes")
                         .padding()
+                        .frame(maxWidth: .infinity)
                         .background(.blue)
                         .foregroundColor(.white)
                         .border(Color.accentColor, width: 2)

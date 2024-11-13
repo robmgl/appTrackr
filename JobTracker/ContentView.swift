@@ -21,7 +21,7 @@ struct ContentView: View {
                     .padding()
                     .background(Color.white)
                     .cornerRadius(8)
-
+                
                 if viewModel.filteredJobs.isEmpty {
                     VStack {
                         Image(systemName: "briefcase.fill")
@@ -32,7 +32,7 @@ struct ContentView: View {
                             .foregroundColor(.gray)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(.white)
+                    .background(Color.white)
                     .cornerRadius(10)
                 } else {
                     List {
@@ -75,6 +75,13 @@ struct ContentView: View {
 }
 
 
+extension LinearGradient {
+    static let blueOrangeGradient = LinearGradient(
+        gradient: Gradient(colors: [Color.blue, Color.orange]),
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+}
 
 
 #Preview {

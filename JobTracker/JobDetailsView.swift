@@ -54,6 +54,7 @@ struct JobDetailsView: View {
                 NavigationLink(destination: EditJobView(viewModel: viewModel, job: $job)) {
                     Text("Update Job")
                         .padding()
+                        .frame(maxWidth: .infinity)
                         .background(Color.clear)
                         .foregroundColor(.blue)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.blue, lineWidth: 1))

@@ -51,8 +51,9 @@ struct JobCardView: View {
                 Spacer()
             }
             .padding()
-            .background(Color.white)
+            .background(Color.white.opacity(0.9))
             .cornerRadius(10)
+            .overlay(RoundedRectangle(cornerRadius: 10).stroke(LinearGradient.blueOrangeGradient, lineWidth: 2)) // Gradient border
             .shadow(radius: 3)
         }
     }
