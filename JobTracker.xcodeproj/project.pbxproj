@@ -20,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		704F565F2CE52FDE00D1899B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		706D8F6A2C3F429E0092AC10 /* JobTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JobTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		706D8F6D2C3F429E0092AC10 /* JobTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobTrackerApp.swift; sourceTree = "<group>"; };
 		706D8F6F2C3F429E0092AC10 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,6 +64,7 @@
 		706D8F6C2C3F429E0092AC10 /* JobTracker */ = {
 			isa = PBXGroup;
 			children = (
+				704F565F2CE52FDE00D1899B /* Info.plist */,
 				706D8F6D2C3F429E0092AC10 /* JobTrackerApp.swift */,
 				706D8F6F2C3F429E0092AC10 /* ContentView.swift */,
 				706D8F832C3F4E3F0092AC10 /* JobDetailsView.swift */,
@@ -299,6 +301,7 @@
 				DEVELOPMENT_TEAM = T49339QP9C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JobTracker/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -329,6 +332,7 @@
 				DEVELOPMENT_TEAM = T49339QP9C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JobTracker/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
