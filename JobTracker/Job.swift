@@ -29,21 +29,26 @@ class Job: ObservableObject, Identifiable, Codable {
     @Published var title: String
     @Published var status: JobStatus
     @Published var dateAdded: Date
-    @Published var updatedDate: Date?  // Optional updated date property
+    @Published var updatedDate: Date?
+    @Published var location: String?   // New property
+    @Published var salary: Double?     // New property
 
     private enum CodingKeys: String, CodingKey {
-        case id, company, title, status, dateAdded, updatedDate
+        case id, company, title, status, dateAdded, updatedDate, location, salary
     }
 
-    init(id: String = UUID().uuidString, company: String, title: String, status: JobStatus, dateAdded: Date, updatedDate: Date? = nil) {
+    init(id: String = UUID().uuidString, company: String, title: String, status: JobStatus, dateAdded: Date, updatedDate: Date? = nil, location: String? = nil, salary: Double? = nil) {
         self.id = id
         self.company = company
         self.title = title
         self.status = status
         self.dateAdded = dateAdded
         self.updatedDate = updatedDate
+        self.location = location
+        self.salary = salary
     }
-    
+
+    // Custom decoding initializer
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
@@ -52,8 +57,11 @@ class Job: ObservableObject, Identifiable, Codable {
         status = try container.decode(JobStatus.self, forKey: .status)
         dateAdded = try container.decode(Date.self, forKey: .dateAdded)
         updatedDate = try? container.decode(Date.self, forKey: .updatedDate)
+        location = try? container.decode(String.self, forKey: .location)
+        salary = try? container.decode(Double.self, forKey: .salary)
     }
 
+    // Custom encoding method
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
@@ -62,5 +70,7 @@ class Job: ObservableObject, Identifiable, Codable {
         try container.encode(status, forKey: .status)
         try container.encode(dateAdded, forKey: .dateAdded)
         try? container.encode(updatedDate, forKey: .updatedDate)
+        try? container.encode(location, forKey: .location)
+        try? container.encode(salary, forKey: .salary)
     }
 }

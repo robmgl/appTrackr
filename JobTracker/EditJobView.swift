@@ -15,6 +15,8 @@ struct EditJobView: View {
     @State private var newTitle: String
     @State private var newCompany: String
     @State private var newStatus: JobStatus
+    @State private var newLocation: String
+    @State private var newSalary: Double?
 
     init(viewModel: JobListViewModel, job: Binding<Job>) {
         self.viewModel = viewModel
@@ -22,48 +24,50 @@ struct EditJobView: View {
         _newTitle = State(initialValue: job.wrappedValue.title)
         _newCompany = State(initialValue: job.wrappedValue.company)
         _newStatus = State(initialValue: job.wrappedValue.status)
+        _newLocation = State(initialValue: job.wrappedValue.location ?? "")
+        _newSalary = State(initialValue: job.wrappedValue.salary)
     }
 
     var body: some View {
         Form {
             Section(header: Text("Edit Job Details")) {
                 TextField("Company", text: $newCompany)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.vertical, 4)
                 TextField("Title", text: $newTitle)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.vertical, 4)
                 Picker("Status", selection: $newStatus) {
                     ForEach(JobStatus.allCases) { status in
                         Text(status.rawValue).tag(status)
                     }
                 }
-                .pickerStyle(MenuPickerStyle())
+                TextField("Location", text: $newLocation)
+                TextField("Salary", value: $newSalary, format: .currency(code: "USD"))
+                    .keyboardType(.decimalPad)
             }
 
             Section {
                 Button(action: {
-                    withAnimation {
-                        viewModel.updateJob(job, newStatus: newStatus)
-//                        viewModel.updateJob(job: job, newTitle: newTitle, newCompany: newCompany, newStatus: newStatus)
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                    // Update job details
+                    job.title = newTitle
+                    job.company = newCompany
+                    job.status = newStatus
+                    job.location = newLocation
+                    job.salary = newSalary
+                    job.updatedDate = Date()
+                    viewModel.saveJobs()  // Persist changes
+                    presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("Save Changes")
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(.blue)
+                        .background(Color.blue)
                         .foregroundColor(.white)
-                        .border(Color.accentColor, width: 2)
-                        .cornerRadius(10)  // Pill shape
-                        .frame(maxWidth: .infinity)
+                        .cornerRadius(10)
                 }
             }
         }
         .navigationTitle("Edit Job")
-        .background(Color("BackgroundColor").edgesIgnoringSafeArea(.all))
     }
 }
+
 
 
 

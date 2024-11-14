@@ -12,6 +12,7 @@ class JobListViewModel: ObservableObject {
     @Published var jobs: [Job] = []
     @Published var searchText: String = ""
 
+    // Computed property for filtered jobs
     var filteredJobs: [Job] {
         if searchText.isEmpty {
             return jobs
@@ -23,12 +24,14 @@ class JobListViewModel: ObservableObject {
         }
     }
 
-    func addJob(company: String, title: String, status: JobStatus) {
-        let newJob = Job(company: company, title: title, status: status, dateAdded: Date())
+    // Method to add a new job with location and salary fields
+    func addJob(company: String, title: String, status: JobStatus, location: String? = nil, salary: Double? = nil) {
+        let newJob = Job(company: company, title: title, status: status, dateAdded: Date(), location: location, salary: salary)
         jobs.append(newJob)
         saveJobs()
     }
 
+    // Method to update a job's status and save changes
     func updateJob(_ job: Job, newStatus: JobStatus) {
         if let index = jobs.firstIndex(where: { $0.id == job.id }) {
             jobs[index].status = newStatus
@@ -37,11 +40,13 @@ class JobListViewModel: ObservableObject {
         }
     }
 
+    // Method to delete jobs at specific offsets and save changes
     func deleteJob(at offsets: IndexSet) {
         jobs.remove(atOffsets: offsets)
         saveJobs()
     }
 
+    // Method to save jobs array to UserDefaults
     func saveJobs() {
         do {
             let data = try JSONEncoder.custom.encode(jobs)
@@ -51,6 +56,7 @@ class JobListViewModel: ObservableObject {
         }
     }
 
+    // Initializer to load jobs from UserDefaults
     init() {
         if let data = UserDefaults.standard.data(forKey: "jobs") {
             do {
@@ -62,6 +68,7 @@ class JobListViewModel: ObservableObject {
     }
 }
 
+// Extensions to provide custom encoding and decoding strategies for dates
 extension JSONEncoder {
     static let custom: JSONEncoder = {
         let encoder = JSONEncoder()

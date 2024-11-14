@@ -14,6 +14,8 @@ struct AddJobView: View {
     @State private var company: String = ""
     @State private var title: String = ""
     @State private var status: JobStatus = .toApply
+    @State private var location: String = ""
+    @State private var salary: Double?
 
     var body: some View {
         NavigationView {
@@ -26,10 +28,13 @@ struct AddJobView: View {
                             Text(status.rawValue).tag(status)
                         }
                     }
+                    TextField("Location", text: $location)
+                    TextField("Salary", value: $salary, format: .currency(code: "USD"))
+                        .keyboardType(.decimalPad)
                 }
                 Button(action: {
                     if !company.isEmpty && !title.isEmpty {
-                        viewModel.addJob(company: company, title: title, status: status)
+                        viewModel.addJob(company: company, title: title, status: status, location: location, salary: salary)
                         presentationMode.wrappedValue.dismiss()
                     }
                 }) {

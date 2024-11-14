@@ -10,21 +10,13 @@ import SwiftUI
 struct JobCardView: View {
     @ObservedObject var viewModel: JobListViewModel
     var job: Job
-    
+
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
         return formatter
     }()
-    
-    private var companyInitial: String {
-        String(job.company.prefix(1)).lowercased()
-    }
-    
-    private var companyIconName: String {
-        "\(companyInitial).circle.fill"
-    }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
@@ -34,11 +26,17 @@ struct JobCardView: View {
                         .bold()
                     Text("@ \(job.company)")
                         .font(.system(size: 17))
-                    HStack {
-                        Text("Status: \(job.status.rawValue)")
+                    if let location = job.location {
+                        Text("Location: \(location)")
                             .font(.subheadline)
-                            .bold()
                     }
+                    if let salary = job.salary {
+                        Text("Salary: \(salary, format: .currency(code: "USD"))")
+                            .font(.subheadline)
+                    }
+                    Text("Status: \(job.status.rawValue)")
+                        .font(.subheadline)
+                        .bold()
                     if let updatedDate = job.updatedDate {
                         Text("Updated: \(dateFormatter.string(from: updatedDate))")
                             .font(.footnote)
@@ -53,7 +51,7 @@ struct JobCardView: View {
             .padding()
             .background(Color.white.opacity(0.9))
             .cornerRadius(10)
-            .overlay(RoundedRectangle(cornerRadius: 10).stroke(LinearGradient.blueOrangeGradient, lineWidth: 2)) // Gradient border
+            .overlay(RoundedRectangle(cornerRadius: 10).stroke(LinearGradient.blueOrangeGradient, lineWidth: 2))
             .shadow(radius: 3)
         }
     }

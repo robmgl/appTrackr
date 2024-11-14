@@ -33,6 +33,7 @@ struct JobDetailsView: View {
                 .foregroundColor(.gray)
                 .padding(.bottom, 20)
                 .frame(maxWidth: .infinity, alignment: .center)
+            
             Text("Company: \(job.company)")
                 .font(.system(size: 30))
                 .bold()
@@ -41,6 +42,19 @@ struct JobDetailsView: View {
             Text("Status: \(job.status.rawValue)")
                 .font(.system(size: 20))
                 .bold()
+            
+            // Display location if available
+            if let location = job.location, !location.isEmpty {
+                Text("Location: \(location)")
+                    .font(.subheadline)
+            }
+            
+            // Display salary if available
+            if let salary = job.salary {
+                Text("Salary: \(salary, format: .currency(code: "USD"))")
+                    .font(.subheadline)
+            }
+
             if let updatedDate = job.updatedDate {
                 Text("Updated: \(dateFormatter.string(from: updatedDate))")
                     .font(.subheadline)
@@ -49,7 +63,9 @@ struct JobDetailsView: View {
             Text("Date Added: \(dateFormatter.string(from: job.dateAdded))")
                 .font(.subheadline)
                 .foregroundColor(.gray)
+            
             Spacer()
+            
             HStack {
                 NavigationLink(destination: EditJobView(viewModel: viewModel, job: $job)) {
                     Text("Update Job")
@@ -61,6 +77,7 @@ struct JobDetailsView: View {
                         .cornerRadius(8)
                         .padding(.bottom, 20)
                 }
+                
                 Spacer()
             }
         }
